@@ -11,24 +11,24 @@
 
 (defn- make-particular-way-of-saying
   [{:keys [pred say-as]}]
-  (fn [{:keys [acc n] :as so-far}]
+  (fn [{:keys [res n] :as so-far}]
     (if (pred n)
-      (assoc so-far :acc (str acc say-as))
+      (assoc so-far :res (str res say-as))
       so-far)))
 
-(defn- just-say [{:keys [acc n]}]
-  (if (clojure.string/blank? acc)
+(defn- default-way-of-saying [{:keys [res n]}]
+  (if (clojure.string/blank? res)
     (str n)
-    acc))
+    res))
 
 (defn- make-say-function []
   (->> particular-ways-of-saying-numbers
        reverse
        (map make-particular-way-of-saying)
-       (cons just-say)
+       (cons default-way-of-saying)
        (apply comp)))
 
 (def ^:private say-number (make-say-function))
 
 (defn say [n]
-  (say-number {:acc "" :n n}))
+  (say-number {:res "" :n n}))
