@@ -1,17 +1,21 @@
 (ns ocp.core)
 
-(defn- multiple? [n m]
+(defn- multiple-of? [m n]
   (zero? (mod n m)))
 
-(defn- say-buzz [{:keys [acc n] :as so-far}]
-  (if (multiple? n 5)
-    (assoc so-far :acc (str acc "Buzz"))
-    so-far))
+(defn- make-say-something [pred what]
+  (fn [{:keys [acc n] :as so-far}]
+    (if (pred n)
+      (assoc so-far :acc (str acc what))
+      so-far)))
 
-(defn- say-fizz [{:keys [acc n] :as so-far}]
-  (if (multiple? n 3)
-    (assoc so-far :acc (str acc "Fizz"))
-    so-far))
+(def say-buzz
+  (make-say-something
+    (partial multiple-of? 5) "Buzz"))
+
+(def say-fizz
+  (make-say-something
+    (partial multiple-of? 3) "Fizz"))
 
 (defn- just-say [{:keys [acc n]}]
   (if (clojure.string/blank? acc)
