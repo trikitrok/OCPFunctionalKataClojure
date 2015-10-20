@@ -1,12 +1,15 @@
 (ns ocp.core)
 
+(defn- multiple? [n m]
+  (zero? (mod n m)))
+
 (defn- say-buzz [{:keys [acc n] :as so-far}]
-  (if (zero? (mod n 5))
+  (if (multiple? n 5)
     (assoc so-far :acc (str acc "Buzz"))
     so-far))
 
 (defn- say-fizz [{:keys [acc n] :as so-far}]
-  (if (zero? (mod n 3))
+  (if (multiple? n 3)
     (assoc so-far :acc (str acc "Fizz"))
     so-far))
 
