@@ -17,4 +17,9 @@
   (fact
     "but the multiples of 5 are said as Buzz"
     (say 5) => "Buzz"
-    (say 10) => "Buzz"))
+    (say 10) => "Buzz")
+
+  (fact
+    "but the multiples of 3 and 5 are said as FizzBuzz"
+    (say 15) => "FizzBuzz"
+    (say 30) => "FizzBuzz"))
