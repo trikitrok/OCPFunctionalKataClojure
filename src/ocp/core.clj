@@ -17,13 +17,17 @@
   (make-say-something
     (partial multiple-of? 3) "Fizz"))
 
+(def say-bang
+  (make-say-something
+    (partial multiple-of? 7) "Bang"))
+
 (defn- just-say [{:keys [acc n]}]
   (if (clojure.string/blank? acc)
     (str n)
     acc))
 
 (def ^:private say-number
-  (comp just-say say-buzz say-fizz))
+  (comp just-say say-bang say-buzz say-fizz))
 
 (defn say [n]
   (say-number {:acc "" :n n}))
