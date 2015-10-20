@@ -42,4 +42,10 @@
   (fact
     "but the multiples of 3, 5 and 7 are said as FizzBuzzBang"
     (say 105) => "FizzBuzzBang"
-    (say 210) => "FizzBuzzBang"))
+    (say 210) => "FizzBuzzBang")
+
+  (fact
+    "but 11, 13 and 17 are said as Klang"
+    (say 11) => "Klang"
+    (say 13) => "Klang"
+    (say 17) => "Klang"))

@@ -18,7 +18,8 @@
   (let [particular-ways-of-saying-numbers
         [{:pred (partial multiple-of? 3) :say-as "Fizz"}
          {:pred (partial multiple-of? 5) :say-as "Buzz"}
-         {:pred (partial multiple-of? 7) :say-as "Bang"}]]
+         {:pred (partial multiple-of? 7) :say-as "Bang"}
+         {:pred #(contains? #{11 13 17} %) :say-as "Klang"}]]
     (->> particular-ways-of-saying-numbers
          reverse
          (map make-particular-way-of-saying)
