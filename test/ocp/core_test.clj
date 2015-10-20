@@ -37,4 +37,9 @@
   (fact
     "but the multiples of 5 and 7 are said as BuzzBang"
     (say 35) => "BuzzBang"
-    (say 70) => "BuzzBang"))
+    (say 70) => "BuzzBang")
+
+  (fact
+    "but the multiples of 3, 5 and 7 are said as FizzBuzzBang"
+    (say 105) => "FizzBuzzBang"
+    (say 210) => "FizzBuzzBang"))
