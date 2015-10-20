@@ -9,15 +9,15 @@
       (assoc so-far :acc (str acc what))
       so-far)))
 
-(def say-buzz
+(def ^:private say-buzz
   (make-say-something
     (partial multiple-of? 5) "Buzz"))
 
-(def say-fizz
+(def ^:private say-fizz
   (make-say-something
     (partial multiple-of? 3) "Fizz"))
 
-(def say-bang
+(def ^:private say-bang
   (make-say-something
     (partial multiple-of? 7) "Bang"))
 
