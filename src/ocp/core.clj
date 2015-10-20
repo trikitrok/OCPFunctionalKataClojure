@@ -1,18 +1,22 @@
 (ns ocp.core)
 
-(defn- say-fizz [fn n]
-  (when (zero? (mod n 3))
-    "Fizz"))
+(defn- say-buzz [{:keys [acc n] :as so-far}]
+  (if (zero? (mod n 5))
+    (assoc so-far :acc (str acc "Buzz"))
+    so-far))
 
-(defn- just-say [fn n]
-  (if-let [res (fn n)]
-    res
-    (str n)))
+(defn- say-fizz [{:keys [acc n] :as so-far}]
+  (if (zero? (mod n 3))
+    (assoc so-far :acc (str acc "Fizz"))
+    so-far))
+
+(defn- just-say [{:keys [acc n]}]
+  (if (clojure.string/blank? acc)
+    (str n)
+    acc))
 
 (def ^:private say-number
-  (partial just-say
-           (partial say-fizz
-                    (fn [n] nil))))
+  (comp just-say say-buzz say-fizz))
 
 (defn say [n]
-  (say-number n))
+  (say-number {:acc "" :n n}))
