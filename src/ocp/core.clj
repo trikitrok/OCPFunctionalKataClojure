@@ -3,31 +3,29 @@
 (defn- multiple-of? [m n]
   (zero? (mod n m)))
 
-(defn- make-say-something [pred what]
+(defn- make-particular-way-of-saying [{:keys [pred say-as]}]
   (fn [{:keys [acc n] :as so-far}]
     (if (pred n)
-      (assoc so-far :acc (str acc what))
+      (assoc so-far :acc (str acc say-as))
       so-far)))
-
-(def ^:private say-buzz
-  (make-say-something
-    (partial multiple-of? 5) "Buzz"))
-
-(def ^:private say-fizz
-  (make-say-something
-    (partial multiple-of? 3) "Fizz"))
-
-(def ^:private say-bang
-  (make-say-something
-    (partial multiple-of? 7) "Bang"))
 
 (defn- just-say [{:keys [acc n]}]
   (if (clojure.string/blank? acc)
     (str n)
     acc))
 
-(def ^:private say-number
-  (comp just-say say-bang say-buzz say-fizz))
+(defn- make-say-function []
+  (let [particular-ways-of-saying-numbers
+        [{:pred (partial multiple-of? 3) :say-as "Fizz"}
+         {:pred (partial multiple-of? 5) :say-as "Buzz"}
+         {:pred (partial multiple-of? 7) :say-as "Bang"}]]
+    (->> particular-ways-of-saying-numbers
+         reverse
+         (map make-particular-way-of-saying)
+         (cons just-say)
+         (apply comp))))
+
+(def ^:private say-number (make-say-function))
 
 (defn say [n]
   (say-number {:acc "" :n n}))
